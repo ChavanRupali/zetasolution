@@ -32,7 +32,7 @@ public class AddressBook {
 		str.forEach(con -> {
 
 			boolean test = con.getName().equals(name);
-			if (!test) {			
+			if (!test) {
 				newSet.add(con);
 			}
 
@@ -41,11 +41,21 @@ public class AddressBook {
 		this.contacts = newSet;
 	}
 
-	public void updateContact(String name, Contact contact) {
+	public void updateContact(String name, Contact contact) throws Exception {
 		// TODO
 		Stream<Contact> str = contacts.stream();
 		Set<Contact> newSet = new HashSet<>();
-
+		Iterator<Contact> itr = contacts.iterator();
+		boolean found = false;
+		while (itr.hasNext()) {
+			if (itr.next().getName().equalsIgnoreCase(name)) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			throw new Exception("Could not search by name");
+		}
 		str.forEach(con -> {
 
 			boolean test = con.getName().equals(name);
@@ -70,7 +80,7 @@ public class AddressBook {
 		Iterator<Contact> contactItr = contacts.iterator();
 		while (contactItr.hasNext()) {
 			Contact next = contactItr.next();
-			if (next.getName().equals(name)) {
+			if (next.getName().contains(name)) {
 				list.add(next);
 			}
 		}
